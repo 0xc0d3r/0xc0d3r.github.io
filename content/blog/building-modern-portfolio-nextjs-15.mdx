@@ -1,0 +1,75 @@
+---
+title: Building a Modern Portfolio with Next.js 15
+description: A comprehensive guide to creating a portfolio website using the latest Next.js features, Tailwind CSS, and shadcn/ui components.
+date: 2024-12-30
+published: true
+tags:
+  - Next.js
+  - React
+  - Tutorial
+  - Tailwind CSS
+---
+
+# Introduction
+
+Building a personal portfolio website is a great way to showcase your work and skills. In this guide, we'll walk through creating a modern portfolio using Next.js 15, Tailwind CSS, and shadcn/ui components.
+
+## Why Next.js 15?
+
+Next.js 15 brings several exciting features that make it perfect for portfolio sites:
+
+- **React Server Components** - Faster page loads with server-side rendering
+- **App Router** - Intuitive file-based routing
+- **Built-in Image Optimization** - Automatic image optimization
+- **TypeScript Support** - First-class TypeScript support
+
+## Getting Started
+
+First, create a new Next.js project:
+
+```bash
+npx create-next-app@latest my-portfolio --typescript --tailwind --app
+```
+
+This command sets up a new project with TypeScript and Tailwind CSS pre-configured.
+
+## Project Structure
+
+Organize your project like this:
+
+```text
+src/
+├── app/
+│   ├── page.tsx
+│   ├── about/
+│   ├── projects/
+│   └── blog/
+├── components/
+│   ├── ui/
+│   └── sections/
+└── lib/
+```
+
+## Adding shadcn/ui
+
+shadcn/ui provides beautiful, accessible components:
+
+```bash
+npx shadcn@latest init
+npx shadcn@latest add button card
+```
+
+## Key Features to Include
+
+When building your portfolio, consider including:
+
+1. **Hero Section** - A compelling introduction
+2. **Projects Showcase** - Display your best work
+3. **Blog** - Share your knowledge and thoughts
+4. **Contact** - Make it easy to reach you
+
+## Conclusion
+
+With Next.js 15, Tailwind CSS, and shadcn/ui, you can create a stunning portfolio in no time. The key is to focus on clean design, fast performance, and great content.
+
+Happy coding! 🚀

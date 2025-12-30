@@ -1,0 +1,112 @@
+---
+title: Getting Started with TypeScript
+description: A beginner-friendly introduction to TypeScript. Learn why type safety matters and how to start using TypeScript in your projects.
+date: 2024-12-20
+published: true
+tags:
+  - TypeScript
+  - JavaScript
+  - Tutorial
+---
+
+# Getting Started with TypeScript
+
+TypeScript is JavaScript with superpowers. It adds static typing to JavaScript, catching errors before runtime and making your code more robust.
+
+## Why TypeScript?
+
+- **Catch errors early** - Find bugs at compile time, not in production
+- **Better IDE support** - Autocomplete, refactoring, navigation
+- **Improved documentation** - Types serve as inline documentation
+- **Safer refactoring** - Confidence when changing code
+
+## Basic Types
+
+```typescript
+// Primitives
+let name: string = "John";
+let age: number = 30;
+let isActive: boolean = true;
+
+// Arrays
+let numbers: number[] = [1, 2, 3];
+let names: Array<string> = ["Alice", "Bob"];
+
+// Objects
+interface User {
+  id: number;
+  name: string;
+  email?: string; // Optional property
+}
+
+const user: User = {
+  id: 1,
+  name: "John"
+};
+```
+
+## Functions
+
+```typescript
+// Function with types
+function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+// Arrow function
+const add = (a: number, b: number): number => a + b;
+
+// Optional and default parameters
+function createUser(name: string, age?: number, role = "user") {
+  // ...
+}
+```
+
+## Generics
+
+Generics let you write reusable, type-safe code:
+
+```typescript
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+// Usage
+const num = identity<number>(42);
+const str = identity<string>("hello");
+```
+
+## Union Types
+
+When a value can be multiple types:
+
+```typescript
+type Status = "pending" | "approved" | "rejected";
+
+function setStatus(status: Status) {
+  // TypeScript ensures only valid statuses are passed
+}
+
+setStatus("pending"); // ✓
+setStatus("invalid"); // ✗ Type error!
+```
+
+## Getting Started
+
+Install TypeScript in your project:
+
+```bash
+npm install -D typescript
+npx tsc --init
+```
+
+This creates a `tsconfig.json` with sensible defaults. Start writing `.ts` files and enjoy type safety!
+
+## Pro Tips
+
+1. **Start gradual** - You can mix `.js` and `.ts` files
+2. **Use strict mode** - Enable `strict: true` in tsconfig
+3. **Don't overtype** - Let TypeScript infer when possible
+4. **Embrace utility types** - `Partial`, `Pick`, `Omit` are your friends
+
+Happy typing! 🎯
