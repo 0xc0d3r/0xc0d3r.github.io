@@ -1,0 +1,156 @@
+---
+title: "Under the Hood: Demystifying How React Handles Events"
+description: "React makes event handling look like standard HTML, but there's a lot of hidden magic. Here's a deep dive into event delegation, SyntheticEvents, and how React's simulated propagation system works."
+date: 2020-10-15
+published: true
+tags: ["react", "javascript", "dom"]
+---
+
+Hey y'all! 👋🏾 Vanilla JS is powerful on its own. But when building massive web applications, most of us reach for React to keep our sanity.
+
+Recently, I was diving deep into a bug involving modals and nested button clicks. It made me realize that while React makes handling events look like standard HTML, there is a lot of hidden magic happening under the hood.
+
+Most of these concepts are pretty basic stuff, and nothing fancy! However, this article is more for beginners and also for my future self to remember exactly how React handles the browser event flow.
+
+## So, what problem does React's event system solve?
+
+In native HTML, if you want to capture user actions on a button, you add an event listener directly to that specific HTML node.
+
+Imagine you are rendering a dashboard with a massive list of 10,000 interactive items. If you attach an individual event listener to every single button, your browser's memory will choke and your performance will hit rock bottom.
+
+Furthermore, different web browsers (Chrome, Safari, Firefox) historically handle event data slightly differently. Writing cross-browser patches for every single event is a nightmare you don't want to live through.
+
+## How does React solve it?
+
+React completely abstracts event listeners from individual DOM nodes. It builds a highly efficient system around two core concepts:
+
+## 1. The Central Mailroom (Event Delegation)
+
+When you write `<button onClick={handleClick}>`, React doesn't actually call `addEventListener` on that button.
+
+Instead, React hooks **one single event listener** at the root container of your entire app (usually `<div id="root">`). When a user clicks a button, the browser event naturally bubbles up the physical HTML tree until it hits that root div, where React catches it and routes it to your component.
+
+## 2. SyntheticEvents
+
+The moment React catches the native browser event at the root, it wraps it inside a customized object called a **SyntheticEvent**.
+
+This is a cross-browser wrapper that conforms perfectly to the W3C specification. It normalizes browser quirks so that properties like `e.target` behave identically whether your user is browsing on an ancient version of Safari or the latest Chrome build.
+
+## The 4-Step Journey of a Click
+
+To truly see the magic, you have to understand the physical and virtual path an event takes. It actually performs a sequential two-way journey containing two separate bubble phases!
+
+When you click a button inside your components, the event goes through this timeline:
+
+```text
+[ User Clicks a Button ]
+           │
+           ▼
+STAGE 1: Native Browser Capture ──► Travels DOWN the HTML DOM to the button
+           │
+           ▼
+STAGE 2: Native Browser Bubble  ──► Travels UP the HTML DOM to reach <div id="root">
+           │
+      (React catches it here!)
+           ▼
+STAGE 3: React Simulated Capture ─► Travels DOWN your JSX component tree (Runs *Capture handlers)
+           │
+           ▼
+STAGE 4: React Simulated Bubble  ─► Travels UP your JSX component tree (Runs standard handlers)
+```
+
+**The Native Elevator (Stages 1 & 2):** The browser processes the click. It travels down to the button (Capture) and turns around to climb up the physical HTML layout until it hits your application's root container.
+
+**The React Simulation (Stages 3 & 4):** Once React intercepts the event at the root, it traces your JSX component layout instead of the HTML layout. It runs a simulated downward capture phase (triggering any `onClickCapture` props) and then executes a simulated upward bubbling phase (triggering standard `onClick` props).
+
+## Proving the Concept: The Teleportation Test
+
+We can easily prove that React routes events based on your **virtual JSX hierarchy** rather than the physical HTML structure by using a React Portal. Portals render HTML completely outside of the main app container, attaching elements right to the document's `<body>`.
+
+Take a look at this code:
+
+```jsx
+import React from 'react';
+import { createPortal } from 'react-dom';
+
+function PortalButton() {
+  // Visually and structurally, this button gets moved directly under <body>
+  return createPortal(
+    <button onClick={() => console.log("👉 1. React Child Button Clicked")}>
+      Click Me to Prove the Flow
+    </button>,
+    document.body
+  );
+}
+
+export default function App() {
+  return (
+    /*
+      We attach a listener to this parent div.
+      Physically, the button is NOT inside this div in the browser's DOM!
+    */
+    <div
+      onClick={() => console.log("🎉 2. React Parent Div Caught the Event!")}
+      style={{ padding: '20px', border: '2px dashed gray' }}
+    >
+      <h1>React Event Control Test</h1>
+      <PortalButton />
+    </div>
+  );
+}
+```
+
+What prints in the console?
+
+```text
+👉 1. React Child Button Clicked
+🎉 2. React Parent Div Caught the Event!
+```
+
+**Why this is mind-blowing:** In raw HTML, the button sits directly in the `<body>` element — it is completely separate from the App component's wrapper div. In pure JavaScript, a click on that button would never bubble into the parent div.
+
+The only reason the parent div catches the click is because React catches the event at the document root, reads your original JSX nesting layout, and manually forces the event to bubble through your component tree.
+
+## Real-World Superpower: Using the Capture Phase
+
+Most of the time, you will write standard `onClick` handlers. But appending `Capture` to an event name (`onClickCapture`) gives you the power to intercept actions on the down-trip, before child components can execute code.
+
+Imagine you are building a dashboard workspace that can be toggled into a "Locked Mode". Instead of passing a `disabled` flag to hundreds of custom buttons, you can capture and stop clicks at the very top:
+
+```jsx
+import React, { useState } from 'react';
+
+export default function Dashboard() {
+  const [isLocked, setIsLocked] = useState(true);
+
+  const handleIntercept = (e) => {
+    if (isLocked) {
+      alert("🔒 Layout is locked! Cannot interact with elements.");
+      e.stopPropagation(); // 🛑 Halts the event flow instantly right here!
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={() => setIsLocked(!isLocked)}>
+        Toggle: {isLocked ? "LOCKED" : "UNLOCKED"}
+      </button>
+
+      {/* onClickCapture checks the condition BEFORE the buttons get the click */}
+      <div onClickCapture={handleIntercept} className="workspace">
+        <button onClick={() => alert("Loading analytical report...")}>
+          View Revenue Report
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+Because we use `onClickCapture`, the workspace checks the lock status on the way down. If it's locked, `e.stopPropagation()` freezes the entire execution timeline, and the inner child button's alert code never even executes.
+
+## Conclusion
+
+Relying blindly on abstractions isn't optimal, but understanding how things work under the hood makes debugging feel like a breeze. React's architecture manages to save enormous browser memory while providing a reliable event loop that mimics the native W3C specifications.
+
+JavaScript frameworks have come a long way. By leveraging centralized event handlers and simulated propagation loops, we can build highly reactive, declarative interfaces with minimal overhead.
