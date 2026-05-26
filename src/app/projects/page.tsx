@@ -21,63 +21,7 @@ interface Project {
   featured?: boolean;
 }
 
-const projects: Project[] = [
-  {
-    title: "Project Alpha",
-    description: "A modern web application built with Next.js and TypeScript. Features real-time updates, authentication, and a beautiful UI. This project showcases best practices in React development.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
-    github: "https://github.com/0xc0d3r/project-alpha",
-    demo: "https://project-alpha.vercel.app",
-    stars: 234,
-    forks: 45,
-    featured: true,
-  },
-  {
-    title: "CLI Tool",
-    description: "A powerful command-line tool for automating development workflows. Supports multiple languages and integrates with popular services like GitHub, GitLab, and Jira.",
-    tags: ["Rust", "CLI", "Automation", "Cross-platform"],
-    github: "https://github.com/0xc0d3r/cli-tool",
-    stars: 156,
-    forks: 23,
-    featured: true,
-  },
-  {
-    title: "Open Source Library",
-    description: "A lightweight utility library for JavaScript/TypeScript projects. Zero dependencies, fully typed, and tree-shakeable. Used by thousands of developers worldwide.",
-    tags: ["TypeScript", "Library", "NPM", "Open Source"],
-    github: "https://github.com/0xc0d3r/utility-lib",
-    demo: "https://utility-lib.dev",
-    stars: 512,
-    forks: 78,
-    featured: true,
-  },
-  {
-    title: "AI Chat Bot",
-    description: "An intelligent chatbot powered by OpenAI's GPT models. Features conversation memory, custom personas, and integration with various messaging platforms.",
-    tags: ["Python", "OpenAI", "FastAPI", "Redis"],
-    github: "https://github.com/0xc0d3r/ai-chatbot",
-    demo: "https://chatbot.0xc0d3r.dev",
-    stars: 89,
-    forks: 12,
-  },
-  {
-    title: "Portfolio Template",
-    description: "A beautiful, responsive portfolio template for developers. Built with Next.js and Tailwind CSS. Easy to customize and deploy.",
-    tags: ["Next.js", "Tailwind CSS", "Template", "Open Source"],
-    github: "https://github.com/0xc0d3r/portfolio-template",
-    demo: "https://portfolio-template.vercel.app",
-    stars: 345,
-    forks: 89,
-  },
-  {
-    title: "Task Manager API",
-    description: "A RESTful API for task management applications. Features authentication, real-time updates with WebSockets, and comprehensive documentation.",
-    tags: ["Node.js", "Express", "MongoDB", "WebSocket"],
-    github: "https://github.com/0xc0d3r/task-api",
-    stars: 67,
-    forks: 15,
-  },
-];
+const projects: Project[] = [];
 
 export default function ProjectsPage() {
   const featuredProjects = projects.filter((p) => p.featured);

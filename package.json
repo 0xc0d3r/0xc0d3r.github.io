@@ -2,9 +2,12 @@
   "name": "personal-website",
   "version": "0.1.0",
   "private": true,
+  "imports": {
+    "#site/content": "./.velite/index.js"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "velite --watch & next dev",
+    "build": "velite build && next build",
     "start": "next start",
     "lint": "eslint"
   },

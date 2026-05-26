@@ -1,12 +1,13 @@
 export const siteConfig = {
-  name: "0xc0d3r",
-  fullName: "Anesh Parvatha", // Update with your real name
-  title: "0xc0d3r | Builder of Internet Things",
-  description: "Hey! I'm a developer who loves building things for the web. I tinker with code, ship side projects, and write about what I learn along the way.",
-  tagline: "your friendly neighborhood developer",
-  url: "https://0xc0d3r.dev",
+  name: "Anesh",
+  fullName: "Anesh Parvatha",
+  title: "Anesh | Full Stack & AI Engineer",
+  description: "Full Stack & AI Engineer with 11+ years of experience — fintech, AI-powered automation, and products built end-to-end.",
+  tagline: "full stack & AI engineer",
+  url: "https://0xc0d3r.github.io",
   github: "0xc0d3r",
-  email: "hello@0xc0d3r.dev",
+  avatar: "/Anesh_Professional_Pic.png",
+  email: "anesh.codes@gmail.com",
   location: "The Internet",
   status: "Building cool stuff",
   links: {
@@ -19,7 +20,6 @@ export const siteConfig = {
     { name: "About", href: "/about", emoji: "👋" },
     { name: "Projects", href: "/projects", emoji: "🚀" },
     { name: "Blog", href: "/blog", emoji: "✍️" },
-    { name: "Gallery", href: "/gallery", emoji: "📸" },
   ],
   // Personal touches
   currentlyLearning: ["Rust", "AI/ML", "System Design"],

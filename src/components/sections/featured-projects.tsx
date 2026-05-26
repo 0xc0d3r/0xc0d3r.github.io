@@ -15,28 +15,7 @@ interface Project {
   demo?: string;
 }
 
-const featuredProjects: Project[] = [
-  {
-    title: "Project Alpha",
-    description: "A modern web application built with Next.js and TypeScript. Features real-time updates, authentication, and a beautiful UI.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
-    github: "https://github.com/0xc0d3r/project-alpha",
-    demo: "https://project-alpha.vercel.app",
-  },
-  {
-    title: "CLI Tool",
-    description: "A powerful command-line tool for automating development workflows. Supports multiple languages and integrates with popular services.",
-    tags: ["Rust", "CLI", "Automation"],
-    github: "https://github.com/0xc0d3r/cli-tool",
-  },
-  {
-    title: "Open Source Library",
-    description: "A lightweight utility library for JavaScript/TypeScript projects. Zero dependencies, fully typed, and tree-shakeable.",
-    tags: ["TypeScript", "Library", "Open Source"],
-    github: "https://github.com/0xc0d3r/utility-lib",
-    demo: "https://utility-lib.dev",
-  },
-];
+const featuredProjects: Project[] = [];
 
 export function FeaturedProjects() {
   return (

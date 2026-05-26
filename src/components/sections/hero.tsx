@@ -31,7 +31,7 @@ export function Hero({ name, bio, avatarUrl }: HeroProps) {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-2xl scale-150" />
           <Avatar className="h-36 w-36 md:h-44 md:w-44 border-4 border-background shadow-2xl relative glow">
-            <AvatarImage src={avatarUrl || `https://github.com/${siteConfig.github}.png`} alt={displayName} />
+            <AvatarImage src={avatarUrl || siteConfig.avatar} alt={displayName} className="object-cover object-top" />
             <AvatarFallback className="text-4xl bg-gradient-to-br from-primary to-accent text-primary-foreground">
               {displayName.slice(0, 2).toUpperCase()}
             </AvatarFallback>

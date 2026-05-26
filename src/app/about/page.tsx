@@ -50,7 +50,7 @@ export default function AboutPage() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row gap-8 items-start mb-12">
         <Avatar className="h-32 w-32 border-4 border-primary/10">
-          <AvatarImage src={`https://github.com/${siteConfig.github}.png`} alt={siteConfig.name} />
+          <AvatarImage src={siteConfig.avatar} alt={siteConfig.name} className="object-cover object-top" />
           <AvatarFallback className="text-3xl">{siteConfig.name.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <div className="flex-1">
@@ -75,7 +75,7 @@ export default function AboutPage() {
           </div>
           <div className="mt-6">
             <Button asChild>
-              <Link href="/resume.pdf" target="_blank">
+              <Link href="/Anesh_Parvatha_Resume.pdf" target="_blank" download>
                 <Download className="mr-2 h-4 w-4" />
                 Download Resume
               </Link>
