@@ -21,7 +21,15 @@ interface Project {
   featured?: boolean;
 }
 
-const projects: Project[] = [];
+const projects: Project[] = [
+  {
+    title: "React Flow Form",
+    description: "Multi-page form builder with rule-based navigation and a live flow diagram. Define conditional logic between steps and visualise the entire form flow in real time.",
+    tags: ["React", "TypeScript"],
+    demo: "https://react-flow-form.vercel.app/",
+    featured: true,
+  },
+];
 
 export default function ProjectsPage() {
   const featuredProjects = projects.filter((p) => p.featured);
